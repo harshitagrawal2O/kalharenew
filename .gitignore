@@ -30,4 +30,5 @@ Thumbs.db
 *.tsbuildinfo
 
 # Raw source images (originals before copying to public/)
-images/
+# Leading slash = only root-level images/, NOT public/images/
+/images/
