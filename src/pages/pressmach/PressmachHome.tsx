@@ -1,4 +1,4 @@
-﻿import { useRef } from "react";
+﻿import { useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
@@ -9,6 +9,65 @@ import {
   Settings2,
   Award,
 } from "lucide-react";
+
+function usePingPongVideo() {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    let rafId = 0;
+    let rate = 1;
+    let cancelled = false;
+
+    const playForward = () => {
+      el.playbackRate = rate;
+      el.play().catch(() => {});
+    };
+
+    const playReverse = () => {
+      el.pause();
+      let last = performance.now();
+      const step = (now: number) => {
+        if (cancelled) return;
+        const dt = (now - last) / 1000;
+        last = now;
+        el.currentTime = Math.max(0, el.currentTime - dt * rate);
+        if (el.currentTime <= 0.03) {
+          el.currentTime = 0;
+          playForward();
+        } else {
+          rafId = requestAnimationFrame(step);
+        }
+      };
+      rafId = requestAnimationFrame(step);
+    };
+
+    const handleLoadedMetadata = () => {
+      if (el.duration && isFinite(el.duration)) {
+        // Stretch one forward pass to take exactly 1 second longer.
+        rate = el.duration / (el.duration + 1);
+      }
+      playForward();
+    };
+
+    const handleEnded = () => playReverse();
+
+    el.addEventListener("loadedmetadata", handleLoadedMetadata);
+    el.addEventListener("ended", handleEnded);
+    if (el.readyState >= 1) handleLoadedMetadata();
+
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(rafId);
+      el.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      el.removeEventListener("ended", handleEnded);
+    };
+  }, []);
+
+  return ref;
+}
 
 const fadeUp = {
   initial: { opacity: 0, y: 50 },
@@ -23,44 +82,44 @@ const fadeUp = {
 const machines = [
   {
     id: "g30",
-    model: "G-30(i)",
+    model: "G-30",
     tagline: "Compact Precision",
     desc: "Entry-level Die-Sinking EDM. Designed for small workshops demanding industrial-grade accuracy in a compact footprint.",
     image: "/images/pressmach/g30-green.jpeg",
     specs: [
-      { label: "Table", value: "300 Ã— 200mm" },
+      { label: "Table", value: "300 × 200mm" },
       { label: "Z-Travel", value: "200mm" },
-      { label: "Accuracy", value: "Â±0.005mm" },
+      { label: "Accuracy", value: "±0.005mm" },
     ],
   },
   {
     id: "g45",
-    model: "G-45(i)",
+    model: "G-45",
     tagline: "Mid-Range Versatility",
     desc: "The most versatile machine in the lineup. Handles a wide range of tooling and mould work with consistent surface finish.",
     image: "/images/pressmach/g45-yellow.jpeg",
     specs: [
-      { label: "Table", value: "450 Ã— 300mm" },
+      { label: "Table", value: "450 × 300mm" },
       { label: "Z-Travel", value: "300mm" },
-      { label: "Accuracy", value: "Â±0.003mm" },
+      { label: "Accuracy", value: "±0.003mm" },
     ],
   },
   {
     id: "g60",
-    model: "G-60(i)",
+    model: "G-60",
     tagline: "Flagship Performance",
     desc: "Full-scale semi-CNC EDM. Built for high-throughput production environments that demand repeatability and surface quality.",
     image: "/images/pressmach/g60-studio.jpeg",
     specs: [
-      { label: "Table", value: "600 Ã— 400mm" },
+      { label: "Table", value: "600 × 400mm" },
       { label: "Z-Travel", value: "400mm" },
-      { label: "Accuracy", value: "Â±0.002mm" },
+      { label: "Accuracy", value: "±0.002mm" },
     ],
   },
 ];
 
 const stats = [
-  { value: "Â±0.002mm", label: "Peak Accuracy" },
+  { value: "±0.002mm", label: "Peak Accuracy" },
   { value: "3", label: "Machine Series" },
   { value: "Semi-CNC", label: "Control Type" },
   { value: "Bangalore", label: "Manufactured In" },
@@ -74,6 +133,8 @@ export default function PressmachHome() {
   });
   const heroScale = useTransform(scrollYProgress, [0, 1], [1.05, 1.15]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const heroVideoRef = usePingPongVideo();
+  const insightVideoRef = usePingPongVideo();
 
   return (
     <motion.div
@@ -88,9 +149,8 @@ export default function PressmachHome() {
       >
         <motion.div style={{ scale: heroScale }} className="absolute inset-0">
           <video
-            autoPlay
+            ref={heroVideoRef}
             muted
-            loop
             playsInline
             className="absolute inset-0 w-full h-full object-cover"
           >
@@ -117,7 +177,7 @@ export default function PressmachHome() {
             transition={{ delay: 0.5, duration: 0.6 }}
             className="text-gold/70 text-xs tracking-[0.5em] uppercase font-body mb-8"
           >
-            PRESSMACH MACHINE TOOLS Â· BANGALORE
+            PRESSMACH MACHINE TOOLS · BANGALORE
           </motion.p>
 
           <div className="overflow-hidden mb-3">
@@ -130,7 +190,7 @@ export default function PressmachHome() {
                 ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
               }}
               className="font-heading font-bold text-white leading-[0.9]"
-              style={{ fontSize: "clamp(3rem, 8vw, 8rem)" }}
+              style={{ fontSize: "clamp(2.25rem, 8vw, 8rem)" }}
             >
               Precision
             </motion.h1>
@@ -145,12 +205,12 @@ export default function PressmachHome() {
                 ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
               }}
               className="font-heading font-bold italic text-gold leading-[0.9]"
-              style={{ fontSize: "clamp(3rem, 8vw, 8rem)" }}
+              style={{ fontSize: "clamp(2.25rem, 8vw, 8rem)" }}
             >
               Engineered.
             </motion.h1>
           </div>
-          <div className="overflow-hidden">
+          <div className="overflow-hidden mb-3">
             <motion.h1
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
@@ -160,9 +220,24 @@ export default function PressmachHome() {
                 ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
               }}
               className="font-heading font-bold text-white/80 leading-[0.9]"
-              style={{ fontSize: "clamp(3rem, 8vw, 8rem)" }}
+              style={{ fontSize: "clamp(2.25rem, 8vw, 8rem)" }}
             >
-              Built for Manufacturing.
+              Built for
+            </motion.h1>
+          </div>
+          <div className="overflow-hidden">
+            <motion.h1
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              transition={{
+                delay: 1.12,
+                duration: 1,
+                ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+              }}
+              className="font-heading font-bold text-white/80 leading-[0.9]"
+              style={{ fontSize: "clamp(1.5rem, 8vw, 8rem)" }}
+            >
+              Manufacturing.
             </motion.h1>
           </div>
 
@@ -173,7 +248,7 @@ export default function PressmachHome() {
             className="text-white/40 font-body font-light text-base md:text-lg max-w-2xl mt-8 leading-relaxed"
           >
             Die-Sinking EDM machines built in Bangalore. Engineered for Indian
-            manufacturing conditions â€” accuracy, uptime, and total cost of
+            manufacturing conditions — accuracy, uptime, and total cost of
             ownership.
           </motion.p>
 
@@ -262,7 +337,7 @@ export default function PressmachHome() {
             <div className="w-16 h-px bg-gold mt-6" />
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-1">
+          <div className="grid grid-cols-1 gap-6">
             {machines.map((m, i) => (
               <motion.div
                 key={m.id}
@@ -406,8 +481,8 @@ export default function PressmachHome() {
               className="text-white/50 font-body font-light text-lg leading-relaxed mb-6"
             >
               Pressmach machines are designed for Indian manufacturing
-              conditions. Every component â€” from the Stepper and servo Z-axis
-              to the dielectric system â€” is engineered for reliability in
+              conditions. Every component — from the Stepper and servo Z-axis
+              to the dielectric system — is engineered for reliability in
               continuous production environments.
             </motion.p>
             <motion.p
@@ -459,7 +534,7 @@ export default function PressmachHome() {
               {
                 icon: <Target size={22} />,
                 title: "Micron Accuracy",
-                desc: "Â±0.002mm repeatability across full servo travel range",
+                desc: "±0.002mm repeatability across full servo travel range",
               },
               {
                 icon: <Zap size={22} />,
@@ -505,9 +580,8 @@ export default function PressmachHome() {
       {/* â”€â”€ VIDEO SECTION â”€â”€ */}
       <section className="relative h-[70vh] overflow-hidden">
         <video
-          autoPlay
+          ref={insightVideoRef}
           muted
-          loop
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
         >
@@ -578,7 +652,7 @@ export default function PressmachHome() {
               className="text-white/40 font-body font-light text-base leading-relaxed mb-8"
             >
               Special table dimensions, dielectric variants, modified servo
-              systems, or custom control interfaces â€” our engineering team
+              systems, or custom control interfaces — our engineering team
               builds to your exact manufacturing requirements.
             </motion.p>
             <motion.div

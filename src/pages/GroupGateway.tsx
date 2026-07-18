@@ -1,42 +1,59 @@
-﻿import { useState, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
-import { ArrowRight, ChevronDown } from "lucide-react";
-import Marquee from "../components/Marquee";
+import { motion, useMotionValue, useTransform, useSpring, useInView, animate } from "framer-motion";
+import { ArrowRight, ChevronDown, BadgeCheck, Settings, Globe2, Factory } from "lucide-react";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
+
+// Scoped palette — deliberately not touching the shared Tailwind theme tokens,
+// since those are tuned for the Kalhare/Pressmach sub-sites.
+const GOLD = "#C89B3C";
+const CARD = "#1A1C1E";
+const OFFWHITE = "#F8F8F8";
+const GRAY = "#B5B5B5";
+
+const SECTION_PADDING = "py-24 md:py-[140px]";
 
 const divisions = [
   {
     id: "kalhare",
     label: "Division I",
-    name: "KALHARE\nENTERPRISES",
+    name: "Kalhare Enterprises",
     tagline: "Premium Transformer Manufacturing",
-    description: "Precision-engineered transformers for industrial, commercial, and infrastructure applications. IS/IEC certified. Bangalore made.",
+    description: "Precision-engineered transformers for industrial and infrastructure applications — IS/IEC certified, built in Bangalore.",
     image: "/images/kalhare/hero.jpeg",
     href: "/kalhare",
-    accent: "#001040",
   },
   {
     id: "pressmach",
     label: "Division II",
-    name: "PRESSMACH\nMACHINE TOOLS",
+    name: "Pressmach Machine Tools",
     tagline: "Precision EDM Solutions",
-    description: "Advanced EDM machine tools, the G-Series, engineered for maximum productivity, accuracy, and uptime.",
+    description: "Advanced EDM machine tools engineered for maximum productivity, accuracy, and uptime in every production run.",
     image: "/images/pressmach/g60-studio.jpeg",
     href: "/pressmach",
-    accent: "#0A0A0A",
   },
 ];
 
-const marqueeItems = [
-  "KALHARE GROUPS",
-  "TRANSFORMER MANUFACTURER",
-  "PRECISION EDM MACHINES",
-  "BANGALORE, INDIA",
-  "ENGINEERING EXCELLENCE",
-  "IS / IEC CERTIFIED",
-  "EST. 1990s",
+const badges = [
+  { icon: BadgeCheck, label: "ISO Certified" },
+  { icon: Settings, label: "30+ Years Experience" },
+  { icon: Globe2, label: "Export Ready" },
+  { icon: Factory, label: "Manufacturing Excellence" },
+];
+
+const stats = [
+  { value: 35, suffix: "+", label: "Years of Excellence" },
+  { value: 5000, suffix: "+", label: "Transformers Delivered" },
+  { value: 20, suffix: "+", label: "Industries Served" },
+  { value: 100, suffix: "%", label: "IS/IEC Certified" },
+];
+
+const timeline = [
+  { year: "1989", label: "Company Founded" },
+  { year: "2003", label: "Manufacturing Expansion" },
+  { year: "2014", label: "Machine Tools Division" },
+  { year: "2025", label: "Global Engineering Solutions" },
 ];
 
 function BlurWord({ word, delay }: { word: string; delay: number }) {
@@ -72,10 +89,16 @@ function MagneticCTA({ href, children, onClick }: { href: string; children: Reac
       onClick={onClick}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
-      style={{ x, y }}
-      className="inline-flex items-center gap-3 bg-gold text-ink text-xs font-body font-bold tracking-[0.2em] uppercase px-6 py-3 hover:bg-white transition-colors duration-300"
+      style={{ x, y, borderColor: `${GOLD}80`, color: GOLD }}
+      className="group relative inline-flex items-center gap-3 overflow-hidden rounded-xl border px-8 py-4 text-xs font-body font-bold tracking-[0.2em] uppercase transition-colors duration-300"
     >
-      {children}
+      <span
+        className="absolute inset-0 -translate-x-full transition-transform duration-500 ease-out group-hover:translate-x-0"
+        style={{ background: GOLD }}
+      />
+      <span className="relative flex items-center gap-3 group-hover:text-[#111315] transition-colors duration-300">
+        {children}
+      </span>
     </motion.a>
   );
 }
@@ -91,8 +114,8 @@ function Particles() {
       {dots.map((d, i) => (
         <motion.div
           key={i}
-          className="absolute w-0.5 h-0.5 rounded-full bg-gold/30"
-          style={{ left: `${d.x}%`, top: `${d.y}%` }}
+          className="absolute w-0.5 h-0.5 rounded-full"
+          style={{ left: `${d.x}%`, top: `${d.y}%`, background: `${GOLD}4D` }}
           animate={{ y: [0, -16, 0], opacity: [0.2, 0.6, 0.2] }}
           transition={{ duration: 4 + (i % 3), delay: i * 0.5, repeat: Infinity, ease: "easeInOut" }}
         />
@@ -101,13 +124,73 @@ function Particles() {
   );
 }
 
+function CountUp({ value, suffix = "" }: { value: number; suffix?: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const [display, setDisplay] = useState(0);
+
+  useEffect(() => {
+    if (!inView) return;
+    const controls = animate(0, value, {
+      duration: 1.8,
+      ease: EASE,
+      onUpdate: (v) => setDisplay(Math.round(v)),
+    });
+    return () => controls.stop();
+  }, [inView, value]);
+
+  return (
+    <span ref={ref}>
+      {display.toLocaleString()}
+      {suffix}
+    </span>
+  );
+}
+
+function TopBar() {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <header
+      className="fixed top-0 left-0 right-0 z-40 transition-all duration-500"
+      style={{
+        background: scrolled ? "rgba(17,19,21,0.85)" : "transparent",
+        backdropFilter: scrolled ? "blur(20px)" : "none",
+        borderBottom: scrolled ? `1px solid ${GOLD}1F` : "1px solid transparent",
+      }}
+    >
+      <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-16 md:h-20">
+        <Link to="/" className="flex items-center">
+          <img
+            src="/images/kalhare-logo.jpeg"
+            alt="Kalhare Groups"
+            className="h-7 md:h-8 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity duration-300"
+          />
+        </Link>
+        <a
+          href="mailto:kalhare@gmail.com"
+          style={{ background: GOLD, color: "#111315" }}
+          className="hidden sm:inline-flex items-center gap-2 rounded-lg text-xs font-body font-bold tracking-[0.15em] uppercase px-5 py-2.5 hover:bg-[#F8F8F8] transition-colors duration-300"
+        >
+          Contact Us
+        </a>
+      </div>
+    </header>
+  );
+}
+
 function DivisionCard({ division, index, showBorder }: { division: (typeof divisions)[0]; index: number; showBorder: boolean }) {
   const [hovered, setHovered] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
-  const rotX = useTransform(my, [-0.5, 0.5], ["3deg", "-3deg"]);
-  const rotY = useTransform(mx, [-0.5, 0.5], ["-3deg", "3deg"]);
+  const rotX = useTransform(my, [-0.5, 0.5], ["2deg", "-2deg"]);
+  const rotY = useTransform(mx, [-0.5, 0.5], ["-2deg", "2deg"]);
 
   const onMove = (e: React.MouseEvent) => {
     if (!ref.current) return;
@@ -121,14 +204,16 @@ function DivisionCard({ division, index, showBorder }: { division: (typeof divis
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 60 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1, delay: 1.2 + index * 0.15, ease: EASE }}
-      className="relative flex-1 overflow-hidden cursor-none group"
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      whileHover={{ y: -8 }}
+      transition={{ duration: 0.9, delay: index * 0.15, ease: EASE }}
+      className="relative h-[460px] md:h-[560px] overflow-hidden rounded-2xl cursor-none group border-[3px] transition-colors duration-500"
       onMouseMove={onMove}
       onMouseLeave={onLeave}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
-      style={{ perspective: 1000 }}
+      style={{ perspective: 1000, borderColor: hovered ? GOLD : `${GOLD}4D` }}
     >
       <Link to={division.href} className="block h-full">
         <motion.div
@@ -139,79 +224,58 @@ function DivisionCard({ division, index, showBorder }: { division: (typeof divis
           <motion.div
             className="absolute inset-0 bg-cover bg-center"
             style={{ backgroundImage: `url(${division.image})` }}
-            animate={{ scale: hovered ? 1.08 : 1.0 }}
+            animate={{ scale: hovered ? 1.04 : 1.0 }}
             transition={{ duration: 0.9, ease: EASE }}
           />
-          <div className="absolute inset-0 bg-linear-to-t from-black/92 via-black/55 to-black/20" />
-          <motion.div
-            className="absolute inset-0"
-            style={{ background: division.accent }}
-            animate={{ opacity: hovered ? 0.35 : 0.6 }}
-            transition={{ duration: 0.5 }}
-          />
-          <div className="absolute inset-0" style={{ backgroundImage: "linear-gradient(rgba(212,175,55,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(212,175,55,0.06) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
+          {/* Restrained overlay — ~45% flat, image stays legible */}
+          <div className="absolute inset-0 bg-black/45" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/10 to-transparent" />
 
-          <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-12">
-            <motion.p
-              className="text-gold/60 text-[10px] tracking-[0.45em] uppercase mb-3 font-body"
-              animate={{ opacity: hovered ? 1 : 0.6, y: hovered ? 0 : 4 }}
-              transition={{ duration: 0.4 }}
-            >
+          <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
+            <p style={{ color: `${GOLD}CC` }} className="text-[10px] tracking-[0.45em] uppercase mb-4 font-body">
               {division.label}
-            </motion.p>
-            <motion.div
-              className="h-px bg-gold/40 mb-4 origin-left"
-              animate={{ scaleX: hovered ? 1.8 : 1 }}
-              style={{ width: 40 }}
-              transition={{ duration: 0.4, ease: EASE }}
-            />
-            <h2
-              className="text-white font-heading font-bold text-2xl md:text-3xl lg:text-4xl leading-tight mb-2"
-              style={{ whiteSpace: "pre-line" }}
-            >
-              {division.name}
-            </h2>
-            <p className="text-gold/80 text-xs tracking-[0.3em] uppercase mb-3 font-body font-medium">
-              {division.tagline}
             </p>
-            <motion.p
-              className="text-white/55 text-sm font-body font-light leading-relaxed max-w-xs mb-6"
-              animate={{ opacity: hovered ? 0.85 : 0.5, y: hovered ? 0 : 6 }}
-              transition={{ duration: 0.4 }}
+
+            {/* Glass panel */}
+            <div
+              className="rounded-2xl p-6 md:p-7 border"
+              style={{
+                background: "rgba(20,20,20,0.55)",
+                backdropFilter: "blur(18px)",
+                WebkitBackdropFilter: "blur(18px)",
+                borderColor: "rgba(255,255,255,0.08)",
+              }}
             >
-              {division.description}
-            </motion.p>
-            <motion.div
-              className="flex items-center gap-3"
-              animate={{ x: hovered ? 6 : 0 }}
-              transition={{ duration: 0.3, ease: EASE }}
-            >
-              <span className="text-white text-sm font-body font-medium tracking-[0.2em] uppercase">
-                Explore Division
-              </span>
-              <motion.div animate={{ x: hovered ? 6 : 0 }} transition={{ duration: 0.3, ease: EASE }}>
-                <ArrowRight size={14} className="text-gold" />
+              <h2 className="font-heading font-bold text-xl md:text-2xl leading-tight mb-2" style={{ color: OFFWHITE }}>
+                {division.name}
+              </h2>
+              <p style={{ color: `${GOLD}CC` }} className="text-xs tracking-[0.25em] uppercase mb-3 font-body font-medium">
+                {division.tagline}
+              </p>
+              <p style={{ color: GRAY }} className="text-sm font-body font-light leading-relaxed mb-5 max-w-sm">
+                {division.description}
+              </p>
+              <motion.div
+                className="flex items-center gap-3"
+                animate={{ x: hovered ? 6 : 0 }}
+                transition={{ duration: 0.3, ease: EASE }}
+              >
+                <span style={{ color: OFFWHITE }} className="text-sm font-body font-medium tracking-[0.2em] uppercase">
+                  Explore Division
+                </span>
+                <ArrowRight size={14} style={{ color: GOLD }} />
               </motion.div>
-            </motion.div>
-            <motion.div
-              className="absolute bottom-0 left-0 h-0.5 bg-gold origin-left"
-              animate={{ scaleX: hovered ? 1 : 0 }}
-              initial={{ scaleX: 0 }}
-              transition={{ duration: 0.5, ease: EASE }}
-            />
+            </div>
           </div>
         </motion.div>
 
         {/* Running gold border */}
-        <svg
-          className="absolute inset-0 w-full h-full pointer-events-none z-20"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-        >
+        <svg className="absolute inset-0 w-full h-full pointer-events-none z-20" viewBox="0 0 100 100" preserveAspectRatio="none">
           <motion.rect
             x="0.75" y="0.75" width="98.5" height="98.5"
+            rx="2"
             fill="none"
-            stroke="#D4AF37"
+            stroke={GOLD}
             strokeWidth="0.8"
             pathLength={1}
             strokeDasharray="0.28 0.72"
@@ -242,154 +306,211 @@ export default function GroupGateway() {
 
   return (
     <motion.div
-      className="h-screen flex flex-col bg-ink relative cursor-none"
-      onMouseMove={(e) => { glowX.set(e.clientX); glowY.set(e.clientY); }}
+      className="min-h-screen cursor-none"
+      style={{ background: "#111315" }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
     >
-      <div className="absolute inset-0 pointer-events-none blueprint-grid" style={{ opacity: 0.8 }} />
-      <Particles />
+      <TopBar />
 
-      {/* Group logo — top left */}
-      <motion.div
-        className="absolute top-5 left-6 z-30"
-        initial={{ opacity: 0, y: -8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
+      {/* ── HERO ── */}
+      <section
+        className="relative min-h-[92vh] flex flex-col items-center justify-center px-6 text-center pt-32 pb-20 overflow-hidden"
+        onMouseMove={(e) => { glowX.set(e.clientX); glowY.set(e.clientY); }}
       >
-        <Link to="/">
-          <img
-            src="/images/kalhare-logo.jpeg"
-            alt="Kalhare Groups"
-            className="h-10 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity duration-300"
-          />
-        </Link>
-      </motion.div>
+        <div className="absolute inset-0 pointer-events-none blueprint-grid" style={{ opacity: 0.6 }} />
+        <Particles />
 
-      {/* Animated accent lines */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <svg className="absolute w-full h-full" preserveAspectRatio="none">
-          <motion.line x1="0" y1="100%" x2="100%" y2="0" stroke="rgba(212,175,55,0.05)" strokeWidth="1"
-            initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 2, delay: 0.5, ease: EASE }} />
-          <motion.line x1="0" y1="75%" x2="75%" y2="0" stroke="rgba(212,175,55,0.03)" strokeWidth="1"
-            initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 2, delay: 0.8, ease: EASE }} />
-        </svg>
-      </div>
-
-      {/* Mouse glow */}
-      <motion.div
-        className="absolute pointer-events-none rounded-full"
-        style={{
-          x: smoothX, y: smoothY,
-          translateX: "-50%", translateY: "-50%",
-          width: 500, height: 500,
-          background: "radial-gradient(circle, rgba(212,175,55,0.07) 0%, transparent 70%)",
-        }}
-      />
-
-      {/* TOP SECTION — auto height, no fixed vh */}
-      <div
-        className="relative z-10 flex flex-col items-center justify-center px-6 py-8 md:py-10 text-center overflow-hidden"
-        style={{ flex: "0 0 auto", maxHeight: "50vh" }}
-      >
         <motion.div
-          initial={{ opacity: 0, y: -12, filter: "blur(6px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.7, delay: 0.2, ease: EASE }}
-          className="flex items-center gap-4 mb-4"
-        >
-          <div className="h-px w-8 bg-gold/40" />
-          <p className="text-gold/50 text-[10px] tracking-[0.5em] uppercase font-body">
-            KALHARE GROUPS &nbsp;&middot;&nbsp; EST. BANGALORE, INDIA
-          </p>
-          <div className="h-px w-8 bg-gold/40" />
-        </motion.div>
+          className="absolute pointer-events-none rounded-full"
+          style={{
+            x: smoothX, y: smoothY,
+            translateX: "-50%", translateY: "-50%",
+            width: 500, height: 500,
+            background: `radial-gradient(circle, ${GOLD}12 0%, transparent 70%)`,
+          }}
+        />
 
         <motion.div
           initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
-          transition={{ duration: 0.9, delay: 0.4, ease: EASE }}
-          className="gold-line w-16 mb-5"
+          transition={{ duration: 0.9, delay: 0.3, ease: EASE }}
+          className="relative z-10 w-16 h-px mb-8"
+          style={{ background: GOLD }}
         />
 
         <h1
-          className="font-heading text-white font-bold leading-[0.95] mb-2 flex flex-wrap justify-center gap-x-[0.22em]"
-          style={{ fontSize: "clamp(1.8rem, 4.5vw, 4.5rem)" }}
+          className="relative z-10 font-heading font-bold leading-[1.05] mb-6 flex flex-wrap justify-center gap-x-[0.22em]"
+          style={{ fontSize: "clamp(2.5rem, 6.5vw, 5rem)", color: OFFWHITE }}
         >
           <BlurWord word="Engineering" delay={0.5} />
-          <BlurWord word="Excellence." delay={0.68} />
-        </h1>
-        <h1
-          className="font-heading text-white/30 font-bold leading-[0.95] mb-5 flex flex-wrap justify-center gap-x-[0.22em]"
-          style={{ fontSize: "clamp(1.8rem, 4.5vw, 4.5rem)" }}
-        >
-          <BlurWord word="Built" delay={0.82} />
-          <BlurWord word="for" delay={0.92} />
-          <BlurWord word="Industry." delay={1.02} />
+          <BlurWord word="Excellence" delay={0.68} />
         </h1>
 
+        <h2
+          className="relative z-10 font-heading italic font-medium mb-10"
+          style={{ fontSize: "clamp(1.5rem, 3vw, 2rem)", color: GOLD }}
+        >
+          <BlurWord word="Built for Industry" delay={0.85} />
+        </h2>
+
         <motion.p
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.0, ease: EASE }}
-          className="text-white/35 font-body font-light text-sm max-w-md leading-relaxed mb-5 hidden sm:block"
+          className="relative z-10 font-body font-light max-w-xl leading-relaxed mb-12"
+          style={{ fontSize: 18, color: GRAY }}
         >
-          A diversified engineering group delivering world-class transformers and precision machine tools. Proudly engineered in India.
+          A diversified engineering group delivering world-class transformers and precision machine tools.
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 1.15, ease: EASE }}
+          className="relative z-10"
         >
           <MagneticCTA href="#divisions" onClick={() => { setActiveBorder(0); setTimeout(() => setActiveBorder(1), 2000); setTimeout(() => setActiveBorder(null), 4000); }}>
             Explore Divisions <ArrowRight size={12} />
           </MagneticCTA>
         </motion.div>
-      </div>
 
-      {/* MARQUEE */}
-      <motion.div
-        initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-        transition={{ delay: 1.1, duration: 0.8 }}
-        className="relative z-10 py-2.5 border-t border-b border-gold/10 bg-white/2 shrink-0"
-      >
-        <Marquee speed={35} gap={56}>
-          {marqueeItems.map((item, i) => (
-            <span key={i} className="flex items-center gap-10">
-              <span className="text-[10px] font-body font-medium tracking-[0.35em] uppercase text-white/30">{item}</span>
-              <span className="text-gold/20 text-xs">&middot;</span>
-            </span>
-          ))}
-        </Marquee>
-      </motion.div>
-
-      {/* DIVISION CARDS */}
-      <div id="divisions" className="relative z-10 flex flex-col md:flex-row flex-1 min-h-0">
-        {divisions.map((d, i) => (
-          <DivisionCard key={d.id} division={d} index={i} showBorder={activeBorder === i} />
-        ))}
         <motion.div
-          initial={{ scaleY: 0 }} animate={{ scaleY: 1 }}
-          transition={{ duration: 0.9, delay: 1.4, ease: EASE }}
-          className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gold/15"
-          style={{ transformOrigin: "top" }}
-        />
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        >
+          <ChevronDown size={18} style={{ color: `${GRAY}80` }} />
+        </motion.div>
+      </section>
+
+      {/* ── BADGES ── */}
+      <div className="relative z-10 border-y" style={{ borderColor: `${GOLD}1A`, background: "rgba(255,255,255,0.015)" }}>
+        <div className="max-w-6xl mx-auto px-6 py-14 md:py-16 grid grid-cols-2 md:grid-cols-4 gap-8">
+          {badges.map(({ icon: Icon, label }, i) => (
+            <motion.div
+              key={label}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.6, delay: i * 0.1, ease: EASE }}
+              className="flex flex-col items-center gap-3 text-center"
+            >
+              <Icon size={22} strokeWidth={1.5} style={{ color: GOLD }} />
+              <p style={{ color: GRAY }} className="text-[11px] font-body tracking-[0.2em] uppercase">{label}</p>
+            </motion.div>
+          ))}
+        </div>
       </div>
 
-      {/* BOTTOM META */}
-      <motion.div
-        initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 1.8 }}
-        className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1"
-      >
-        <p className="text-white/15 text-[10px] font-body tracking-[0.4em] uppercase">
-          KACHOHALLI &middot; BANGALORE &middot; INDIA
+      {/* ── DIVISION CARDS ── */}
+      <section id="divisions" className={SECTION_PADDING}>
+        <div className="max-w-6xl mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease: EASE }}
+            className="text-center mb-16"
+          >
+            <p style={{ color: `${GOLD}99` }} className="text-xs tracking-[0.4em] uppercase font-body mb-4">Our Divisions</p>
+            <h2 className="font-heading font-bold" style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.75rem)", color: OFFWHITE }}>
+              Two Disciplines. One Standard.
+            </h2>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {divisions.map((d, i) => (
+              <DivisionCard key={d.id} division={d} index={i} showBorder={activeBorder === i} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── STATS ── */}
+      <section className={`relative ${SECTION_PADDING} overflow-hidden`}>
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url(/images/pressmach/factory-floor.jpeg)" }}
+        />
+        <div className="absolute inset-0" style={{ background: "rgba(17,19,21,0.88)" }} />
+
+        <div className="relative z-10 max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {stats.map((s, i) => (
+              <motion.div
+                key={s.label}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.7, delay: i * 0.1, ease: EASE }}
+                className="rounded-2xl p-8 md:p-10 text-center border"
+                style={{
+                  background: "rgba(20,20,20,0.55)",
+                  backdropFilter: "blur(18px)",
+                  WebkitBackdropFilter: "blur(18px)",
+                  borderColor: "rgba(255,255,255,0.08)",
+                }}
+              >
+                <p className="font-heading font-bold text-3xl md:text-4xl mb-2" style={{ color: GOLD }}>
+                  <CountUp value={s.value} suffix={s.suffix} />
+                </p>
+                <p style={{ color: GRAY }} className="text-xs font-body tracking-widest uppercase">{s.label}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── TIMELINE ── */}
+      <section className={SECTION_PADDING}>
+        <div className="max-w-6xl mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease: EASE }}
+            className="text-center mb-20"
+          >
+            <p style={{ color: `${GOLD}99` }} className="text-xs tracking-[0.4em] uppercase font-body mb-4">Our Journey</p>
+            <h2 className="font-heading font-bold" style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.75rem)", color: OFFWHITE }}>
+              Decades in the Making.
+            </h2>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-10 sm:gap-6">
+            {timeline.map((t, i) => (
+              <motion.div
+                key={t.year}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.6, delay: i * 0.12, ease: EASE }}
+                className="relative text-center px-4"
+              >
+                <div className="hidden sm:block absolute top-[9px] left-0 right-0 h-px" style={{ background: `${GOLD}30` }} />
+                <div className="relative flex sm:flex-col items-center gap-4 sm:gap-4">
+                  <span
+                    className="w-[9px] h-[9px] rounded-full shrink-0 z-10"
+                    style={{ background: GOLD, boxShadow: `0 0 0 4px ${CARD}` }}
+                  />
+                  <div className="text-left sm:text-center">
+                    <p className="font-heading font-bold text-2xl mb-1" style={{ color: OFFWHITE }}>{t.year}</p>
+                    <p style={{ color: GRAY }} className="text-xs font-body tracking-wider uppercase">{t.label}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── FOOTER META ── */}
+      <div className="border-t py-10 text-center" style={{ borderColor: `${GOLD}14` }}>
+        <p style={{ color: `${GRAY}80` }} className="text-[10px] font-body tracking-[0.4em] uppercase">
+          Kachohalli &middot; Bangalore &middot; India
         </p>
-        <motion.div animate={{ y: [0, 5, 0] }} transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}>
-          <ChevronDown size={14} className="text-white/15" />
-        </motion.div>
-      </motion.div>
+      </div>
     </motion.div>
   );
 }

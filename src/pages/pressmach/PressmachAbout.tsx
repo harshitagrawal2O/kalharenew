@@ -99,9 +99,24 @@ export default function PressmachAbout() {
                 ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
               }}
               className="font-heading font-bold text-white leading-[0.9]"
-              style={{ fontSize: "clamp(2.5rem, 6vw, 5.5rem)" }}
+              style={{ fontSize: "clamp(2.25rem, 6vw, 5.5rem)" }}
             >
-              Precision Without
+              Precision
+            </motion.h1>
+          </div>
+          <div className="overflow-hidden mb-3">
+            <motion.h1
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              transition={{
+                delay: 0.58,
+                duration: 0.9,
+                ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+              }}
+              className="font-heading font-bold text-white leading-[0.9]"
+              style={{ fontSize: "clamp(2.25rem, 6vw, 5.5rem)" }}
+            >
+              Without
             </motion.h1>
           </div>
           <div className="overflow-hidden">
@@ -109,12 +124,12 @@ export default function PressmachAbout() {
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               transition={{
-                delay: 0.65,
+                delay: 0.7,
                 duration: 0.9,
                 ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
               }}
               className="font-heading font-bold italic text-gold leading-[0.9]"
-              style={{ fontSize: "clamp(2.5rem, 6vw, 5.5rem)" }}
+              style={{ fontSize: "clamp(2.25rem, 6vw, 5.5rem)" }}
             >
               Compromise.
             </motion.h1>
@@ -150,7 +165,7 @@ export default function PressmachAbout() {
               transition={{ ...fadeUp.transition, delay: 0.2 }}
               className="text-white/50 font-body font-light text-lg leading-relaxed mb-6"
             >
-              Pressmach Machine Tools is a division of Kalhare Group â€” a
+              Pressmach Machine Tools is a division of Kalhare Group — a
               Bangalore-based engineering group with a track record built over
               three decades of precision manufacturing. We build Die-Sinking EDM
               machines for Indian tool rooms, mould makers, and precision
@@ -173,7 +188,7 @@ export default function PressmachAbout() {
               className="text-white/35 font-body font-light text-base leading-relaxed"
             >
               We serve tool rooms, MSME manufacturers, automotive component
-              suppliers, and defence sub-contractors across India â€” customers
+              suppliers, and defence sub-contractors across India — customers
               who need micron-level accuracy without the overhead of imported
               machine support.
             </motion.p>

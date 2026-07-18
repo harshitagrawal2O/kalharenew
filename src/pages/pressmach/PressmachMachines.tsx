@@ -31,22 +31,22 @@ const machines: Machine[] = [
     tagline: "Precision in a compact frame.",
     heroImage: "/images/pressmach/g30-green.jpeg",
     gallery: ["/images/pressmach/g30-green.jpeg", "/images/pressmach/g30-red.jpeg", "/images/pressmach/g30-green2.jpeg"],
-    description: "The G-30(i) is Pressmach's entry-level Die-Sinking EDM â€” designed for small tool rooms, training centres, and workshops transitioning from manual to EDM-based toolmaking. It offers industrial-grade accuracy in the most compact footprint in our lineup.",
+    description: "The G-30(i) is Pressmach's entry-level Die-Sinking EDM — designed for small tool rooms, training centres, and workshops transitioning from manual to EDM-based toolmaking. It offers industrial-grade accuracy in the most compact footprint in our lineup.",
     highlights: [
       "Servo Z-axis with digital depth control",
       "Integrated flush system with flow regulation",
-      "Compact footprint â€” suits limited floor space",
+      "Compact footprint — suits limited floor space",
       "Easy operator interface, minimal training required",
       "Compatible with most EDM oils",
     ],
     specs: [
-      { label: "Table Size (X Ã— Y)", value: "300 Ã— 200 mm" },
+      { label: "Table Size (X × Y)", value: "300 × 200 mm" },
       { label: "Z-Axis Travel", value: "200 mm" },
       { label: "Max Electrode Weight", value: "15 kg" },
-      { label: "Work Tank Capacity (L Ã— W Ã— H)", value: "500 Ã— 380 Ã— 300 mm" },
+      { label: "Work Tank Capacity (L × W × H)", value: "500 × 380 × 300 mm" },
       { label: "Max Workpiece Weight", value: "200 kg" },
-      { label: "Positional Accuracy", value: "Â±0.005 mm" },
-      { label: "Surface Finish (Ra)", value: "0.4 Âµm" },
+      { label: "Positional Accuracy", value: "±0.005 mm" },
+      { label: "Surface Finish (Ra)", value: "0.4 µm" },
       { label: "Machine Weight", value: "~450 kg" },
       { label: "Power Supply", value: "3-Phase, 415V AC" },
     ],
@@ -59,7 +59,7 @@ const machines: Machine[] = [
     tagline: "The most versatile machine in the lineup.",
     heroImage: "/images/pressmach/g45-yellow.jpeg",
     gallery: ["/images/pressmach/g45-yellow.jpeg", "/images/pressmach/cnc-semi.jpeg", "/images/pressmach/control-panel.jpeg"],
-    description: "The G-45(i) targets the broad middle of the precision tooling market â€” medium-complexity moulds, punch-die work, and production cavity sinking. It combines a larger work envelope with the same servo Z-axis accuracy as the G-60, making it the natural choice for shops that outgrew the G-30.",
+    description: "The G-45(i) targets the broad middle of the precision tooling market — medium-complexity moulds, punch-die work, and production cavity sinking. It combines a larger work envelope with the same servo Z-axis accuracy as the G-60, making it the natural choice for shops that outgrew the G-30.",
     highlights: [
       "Servo Z-axis with programmable cycle memory",
       "Larger work tank for mid-size moulds and blocks",
@@ -68,13 +68,13 @@ const machines: Machine[] = [
       "Enhanced generator for harder materials",
     ],
     specs: [
-      { label: "Table Size (X Ã— Y)", value: "450 Ã— 300 mm" },
+      { label: "Table Size (X × Y)", value: "450 × 300 mm" },
       { label: "Z-Axis Travel", value: "300 mm" },
       { label: "Max Electrode Weight", value: "30 kg" },
-      { label: "Work Tank Capacity (L Ã— W Ã— H)", value: "700 Ã— 500 Ã— 400 mm" },
+      { label: "Work Tank Capacity (L × W × H)", value: "700 × 500 × 400 mm" },
       { label: "Max Workpiece Weight", value: "400 kg" },
-      { label: "Positional Accuracy", value: "Â±0.003 mm" },
-      { label: "Surface Finish (Ra)", value: "0.2 Âµm" },
+      { label: "Positional Accuracy", value: "±0.003 mm" },
+      { label: "Surface Finish (Ra)", value: "0.2 µm" },
       { label: "Machine Weight", value: "~850 kg" },
       { label: "Power Supply", value: "3-Phase, 415V AC" },
     ],
@@ -87,7 +87,7 @@ const machines: Machine[] = [
     tagline: "Full-scale. Full-precision. Built for production.",
     heroImage: "/images/pressmach/g60-studio.jpeg",
     gallery: ["/images/pressmach/g60-studio.jpeg", "/images/pressmach/g60-yellow.jpeg", "/images/pressmach/g60-black.jpeg"],
-    description: "The G-60(i) is Pressmach's flagship machine â€” built for production tool rooms, die-casting mould makers, and precision component manufacturers who demand the highest surface quality, the tightest tolerances, and consistent repeatability across high run volumes. The G-60(i) is the benchmark against which we measure everything else we build.",
+    description: "The G-60(i) is Pressmach's flagship machine — built for production tool rooms, die-casting mould makers, and precision component manufacturers who demand the highest surface quality, the tightest tolerances, and consistent repeatability across high run volumes. The G-60(i) is the benchmark against which we measure everything else we build.",
     highlights: [
       "Full semi-CNC servo with cycle programming and memory",
       "Advanced generator with micro-pulse capability",
@@ -96,13 +96,13 @@ const machines: Machine[] = [
       "Optional orbital motion for improved surface finish",
     ],
     specs: [
-      { label: "Table Size (X Ã— Y)", value: "600 Ã— 400 mm" },
+      { label: "Table Size (X × Y)", value: "600 × 400 mm" },
       { label: "Z-Axis Travel", value: "400 mm" },
       { label: "Max Electrode Weight", value: "60 kg" },
-      { label: "Work Tank Capacity (L Ã— W Ã— H)", value: "900 Ã— 650 Ã— 500 mm" },
+      { label: "Work Tank Capacity (L × W × H)", value: "900 × 650 × 500 mm" },
       { label: "Max Workpiece Weight", value: "800 kg" },
-      { label: "Positional Accuracy", value: "Â±0.002 mm" },
-      { label: "Surface Finish (Ra)", value: "0.1 Âµm" },
+      { label: "Positional Accuracy", value: "±0.002 mm" },
+      { label: "Surface Finish (Ra)", value: "0.1 µm" },
       { label: "Machine Weight", value: "~1,500 kg" },
       { label: "Power Supply", value: "3-Phase, 415V AC" },
     ],
@@ -115,7 +115,7 @@ const machines: Machine[] = [
     tagline: "When the job simply won't fit anything else.",
     heroImage: "/images/pressmach/awesome-1500.jpeg",
     gallery: ["/images/pressmach/awesome-1500.jpeg", "/images/pressmach/factory-floor.jpeg"],
-    description: "The AWESOME-1500 is Pressmach's large-format EDM â€” built for oversized moulds, die blocks, and components that exceed the working envelope of standard machines. It retains the same servo-driven precision architecture as the G-60(i) but in a significantly larger structural frame.",
+    description: "The AWESOME-1500 is Pressmach's large-format EDM — built for oversized moulds, die blocks, and components that exceed the working envelope of standard machines. It retains the same servo-driven precision architecture as the G-60(i) but in a significantly larger structural frame.",
     highlights: [
       "Extra-large work tank for jumbo moulds and die blocks",
       "Full semi-CNC servo system",
@@ -124,13 +124,13 @@ const machines: Machine[] = [
       "High-power generator for rapid material removal",
     ],
     specs: [
-      { label: "Table Size (X Ã— Y)", value: "1,500 Ã— 900 mm" },
+      { label: "Table Size (X × Y)", value: "1,500 × 900 mm" },
       { label: "Z-Axis Travel", value: "600 mm" },
       { label: "Max Electrode Weight", value: "150 kg" },
-      { label: "Work Tank Capacity (L Ã— W Ã— H)", value: "1,700 Ã— 1,100 Ã— 700 mm" },
+      { label: "Work Tank Capacity (L × W × H)", value: "1,700 × 1,100 × 700 mm" },
       { label: "Max Workpiece Weight", value: "3,000 kg" },
-      { label: "Positional Accuracy", value: "Â±0.003 mm" },
-      { label: "Surface Finish (Ra)", value: "0.2 Âµm" },
+      { label: "Positional Accuracy", value: "±0.003 mm" },
+      { label: "Surface Finish (Ra)", value: "0.2 µm" },
       { label: "Machine Weight", value: "~5,000 kg" },
       { label: "Power Supply", value: "3-Phase, 415V AC" },
     ],
@@ -152,7 +152,7 @@ function MachineCard({ m, index }: { m: Machine; index: number }) {
           <span className="text-white/20 font-body text-xs tracking-[0.4em] uppercase">
             {String(index + 1).padStart(2, "0")} / {String(machines.length).padStart(2, "0")}
           </span>
-          <span className="text-white/10 mx-3">â€”</span>
+          <span className="text-white/10 mx-3">—</span>
           <span className="text-gold/50 font-body text-xs tracking-[0.3em] uppercase">{m.series}</span>
         </motion.div>
 
@@ -336,7 +336,7 @@ export default function PressmachMachines() {
               animate={{ y: 0 }}
               transition={{ delay: 0.5, duration: 0.9, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
               className="font-heading font-bold text-white leading-[0.9]"
-              style={{ fontSize: "clamp(2.5rem, 6vw, 5.5rem)" }}
+              style={{ fontSize: "clamp(2rem, 6vw, 5.5rem)" }}
             >
               Machine Tools
             </motion.h1>

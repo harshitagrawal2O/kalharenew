@@ -97,7 +97,7 @@ export default function PressmachCustom() {
           <h2 className="font-heading font-bold text-white text-3xl mb-4">Request Submitted</h2>
           <div className="w-12 h-px bg-gold mx-auto mb-6" />
           <p className="text-white/40 font-body font-light text-base leading-relaxed mb-8">
-            Thank you, <strong className="text-white/70">{form.name}</strong>. Our engineering team will review your machine requirements and respond within 1â€“2 business days with a detailed proposal.
+            Thank you, <strong className="text-white/70">{form.name}</strong>. Our engineering team will review your machine requirements and respond within 1–2 business days with a detailed proposal.
           </p>
           <button
             onClick={() => { setSubmitted(false); setStep(0); setForm(initForm); }}
@@ -173,9 +173,9 @@ export default function PressmachCustom() {
                   <h3 className="font-heading font-bold text-white text-2xl mb-2">Machine & Size</h3>
                   <p className="text-white/35 font-body font-light text-sm mb-8">Select the base model and override dimensions if required.</p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <SelectField label="Base Model" value={form.baseModel} onChange={set("baseModel")} options={["G-30(i) â€” Compact", "G-45(i) â€” Mid-Range", "G-60(i) â€” Flagship", "AWESOME-1500 â€” Large Format", "Custom Dimensions"]} />
-                    <SelectField label="Phase" value={form.phase} onChange={set("phase")} options={["3-Phase 415V AC (Standard)", "Other â€” please specify in notes"]} />
-                    <InputField label="Custom Table Size (optional)" value={form.tableSize} onChange={set("tableSize")} placeholder="e.g. 700 Ã— 500 mm" />
+                    <SelectField label="Base Model" value={form.baseModel} onChange={set("baseModel")} options={["G-30(i) — Compact", "G-45(i) — Mid-Range", "G-60(i) — Flagship", "AWESOME-1500 — Large Format", "Custom Dimensions"]} />
+                    <SelectField label="Phase" value={form.phase} onChange={set("phase")} options={["3-Phase 415V AC (Standard)", "Other — please specify in notes"]} />
+                    <InputField label="Custom Table Size (optional)" value={form.tableSize} onChange={set("tableSize")} placeholder="e.g. 700 × 500 mm" />
                     <InputField label="Custom Z-Travel (optional)" value={form.zTravel} onChange={set("zTravel")} placeholder="e.g. 450 mm" />
                   </div>
                 </div>
@@ -210,7 +210,7 @@ export default function PressmachCustom() {
                         value={form.specialReqs}
                         onChange={(e) => set("specialReqs")(e.target.value)}
                         rows={4}
-                        placeholder="Describe any special requirements â€” modified structure, custom tank dimensions, integration with automation, specific finish requirements..."
+                        placeholder="Describe any special requirements — modified structure, custom tank dimensions, integration with automation, specific finish requirements..."
                         className="w-full border border-white/10 bg-white/5 text-white px-4 py-3 text-sm font-body placeholder:text-white/15 focus:outline-none focus:border-gold/50 transition-colors duration-300 resize-none"
                       />
                     </div>
@@ -219,14 +219,14 @@ export default function PressmachCustom() {
                       <div className="border-2 border-dashed border-white/10 p-8 text-center hover:border-gold/30 transition-colors duration-300 cursor-pointer">
                         <Upload size={24} className="text-white/20 mx-auto mb-3" />
                         <p className="text-white/25 font-body text-sm">Drop files here or click to browse</p>
-                        <p className="text-white/15 font-body text-xs mt-1">PDF, DXF, DWG, STEP â€” max 20MB</p>
+                        <p className="text-white/15 font-body text-xs mt-1">PDF, DXF, DWG, STEP — max 20MB</p>
                       </div>
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* STEP 4 â€” REVIEW */}
+              {/* STEP 4 — REVIEW */}
               {step === 3 && (
                 <div>
                   <h3 className="font-heading font-bold text-white text-2xl mb-2">Review & Submit</h3>

@@ -20,10 +20,10 @@ const stats = [
 ];
 
 const products = [
-  { num: "01", name: "Power Transformers", spec: "0.5 KVA â€“ 2000 KVA", img: "/images/kalhare/hero.jpeg" },
-  { num: "02", name: "Application Specific", spec: "Inverter, Battery, UPS", img: "/images/kalhare/transformer-side.jpeg" },
-  { num: "03", name: "Electronics Grade", spec: "PCB Mount, Pulse, Precision", img: "/images/kalhare/small-3phase.jpeg" },
-  { num: "04", name: "Magnetic Components", spec: "Inductors, Chokes, Reactors", img: "/images/kalhare/nameplate.jpeg" },
+  { num: "01", name: "Power Transformers", spec: "0.5 KVA – 2000 KVA", img: "/images/kalhare/product-power-transformer.png" },
+  { num: "02", name: "Application Specific", spec: "Inverter, Battery, UPS", img: "/images/kalhare/product-application-specific.png" },
+  { num: "03", name: "Electronics Grade", spec: "PCB Mount, Pulse, Precision", img: "/images/kalhare/product-electronics-grade.png" },
+  { num: "04", name: "Magnetic Components", spec: "Inductors, Chokes, Reactors", img: "/images/kalhare/product-magnetic-components.png" },
 ];
 
 export default function KalhareHome() {
@@ -63,16 +63,16 @@ export default function KalhareHome() {
             className="flex items-center gap-4 mb-8"
           >
             <div className="h-px w-12 bg-gold" />
-            <p className="text-gold/70 text-xs tracking-[0.5em] uppercase font-body">KALHARE ENTERPRISES Â· BANGALORE</p>
+            <p className="text-gold/70 text-xs tracking-[0.5em] uppercase font-body">KALHARE ENTERPRISES · BANGALORE</p>
           </motion.div>
 
           <div className="overflow-hidden mb-2">
             <motion.h1
               initial={{ y: "100%", filter: "blur(8px)" }}
-              animate={{ y: 0, filter: "blur(0px)" }}
+              animate={{ y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
               transition={{ delay: 0.6, duration: 1, ease: EASE }}
-              className="font-heading font-bold text-white leading-[0.88]"
-              style={{ fontSize: "clamp(3.5rem, 9vw, 9rem)" }}
+              className="font-heading font-bold text-white leading-[1.05] sm:leading-[0.95]"
+              style={{ fontSize: "clamp(2.25rem, 9vw, 9rem)" }}
             >
               Engineering
             </motion.h1>
@@ -80,23 +80,34 @@ export default function KalhareHome() {
           <div className="overflow-hidden mb-2">
             <motion.h1
               initial={{ y: "100%", filter: "blur(8px)" }}
-              animate={{ y: 0, filter: "blur(0px)" }}
+              animate={{ y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
               transition={{ delay: 0.75, duration: 1, ease: EASE }}
-              className="font-heading font-bold italic text-gold leading-[0.88]"
-              style={{ fontSize: "clamp(3.5rem, 9vw, 9rem)" }}
+              className="font-heading font-bold italic text-gold leading-[1.05] sm:leading-[0.95]"
+              style={{ fontSize: "clamp(2.25rem, 9vw, 9rem)" }}
             >
               Power.
+            </motion.h1>
+          </div>
+          <div className="overflow-hidden mb-2">
+            <motion.h1
+              initial={{ y: "100%", filter: "blur(8px)" }}
+              animate={{ y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
+              transition={{ delay: 0.9, duration: 1, ease: EASE }}
+              className="font-heading font-bold text-white/50 leading-[1.05] sm:leading-[0.95]"
+              style={{ fontSize: "clamp(2.25rem, 9vw, 9rem)" }}
+            >
+              Building
             </motion.h1>
           </div>
           <div className="overflow-hidden mb-10">
             <motion.h1
               initial={{ y: "100%", filter: "blur(8px)" }}
-              animate={{ y: 0, filter: "blur(0px)" }}
-              transition={{ delay: 0.9, duration: 1, ease: EASE }}
-              className="font-heading font-bold text-white/50 leading-[0.88]"
-              style={{ fontSize: "clamp(3.5rem, 9vw, 9rem)" }}
+              animate={{ y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
+              transition={{ delay: 1.02, duration: 1, ease: EASE }}
+              className="font-heading font-bold text-white/50 leading-[1.05] sm:leading-[0.95]"
+              style={{ fontSize: "clamp(2.25rem, 9vw, 9rem)" }}
             >
-              Building Trust.
+              Trust.
             </motion.h1>
           </div>
 
@@ -157,7 +168,7 @@ export default function KalhareHome() {
         </div>
       </section>
 
-      {/* â”€â”€ WHAT WE BUILD â€” full-bleed editorial â”€â”€ */}
+      {/* â”€â”€ WHAT WE BUILD — full-bleed editorial â”€â”€ */}
       <section className="relative h-[65vh] overflow-hidden">
         <img src="/images/kalhare/winding.jpeg" alt="Transformer winding" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-linear-to-r from-navy-950 via-navy-950/80 to-navy-950/15" />
@@ -178,7 +189,7 @@ export default function KalhareHome() {
             </h2>
             <div className="w-16 h-px bg-gold mt-8 mb-6" />
             <p className="text-white/40 font-body font-light text-base leading-relaxed max-w-lg">
-              Core lamination, winding, insulation, impregnation, testing â€” all in-house at Kachohalli.
+              Core lamination, winding, insulation, impregnation, testing — all in-house at Kachohalli.
             </p>
           </motion.div>
         </div>
@@ -314,7 +325,7 @@ export default function KalhareHome() {
             {[
               { icon: <Zap size={20} />, title: "Winding Precision", desc: "Multi-layer winding with Class-H insulation. No shortcuts on core quality." },
               { icon: <ShieldCheck size={20} />, title: "IS/IEC Certified", desc: "Every transformer tested to IS 1180, IS 2026, and IEC 60076 before dispatch." },
-              { icon: <Settings size={20} />, title: "Custom Built", desc: "Non-standard ratings, special enclosures, specific voltages â€” we build to spec." },
+              { icon: <Settings size={20} />, title: "Custom Built", desc: "Non-standard ratings, special enclosures, specific voltages — we build to spec." },
               { icon: <Award size={20} />, title: "Indian-Made", desc: "Designed, wound, tested, and dispatched from our Bangalore facility." },
             ].map((v, i) => (
               <motion.div
@@ -367,7 +378,7 @@ export default function KalhareHome() {
               Your specification. Our precision. Delivered.
             </motion.h2>
             <motion.p {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.2 }} className="text-ink/55 font-body font-light text-base leading-relaxed mb-8">
-              Non-standard KVA ratings, special voltages, custom enclosures, dual outputs â€” our engineering team builds to your exact requirement and delivers a full engineering quotation within 48 hours.
+              Non-standard KVA ratings, special voltages, custom enclosures, dual outputs — our engineering team builds to your exact requirement and delivers a full engineering quotation within 48 hours.
             </motion.p>
             <motion.div {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.3 }}>
               <Link to="/kalhare/custom" className="inline-flex items-center gap-3 bg-ink text-white text-xs font-body font-semibold tracking-widest uppercase px-8 py-4 hover:bg-navy-950 transition-all duration-300">
@@ -382,7 +393,7 @@ export default function KalhareHome() {
             transition={{ duration: 0.9, ease: EASE }}
             className="aspect-4/3 overflow-hidden"
           >
-            <img src="/images/kalhare/nameplate.jpeg" alt="Transformer nameplate" className="w-full h-full object-cover" />
+            <img src="/images/kalhare/custom-transformer.png" alt="Custom-built transformer" className="w-full h-full object-cover" />
           </motion.div>
         </div>
       </section>

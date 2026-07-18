@@ -42,7 +42,7 @@ export default function PressmachContact() {
             Talk to Our Engineering Team.
           </motion.h1>
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} className="text-white/35 font-body font-light text-base leading-relaxed">
-            Machine enquiries, technical questions, site visits, or quotations â€” we're available and ready to help.
+            Machine enquiries, technical questions, site visits, or quotations — we're available and ready to help.
           </motion.p>
         </div>
       </section>
@@ -51,7 +51,7 @@ export default function PressmachContact() {
       <section className="py-20 bg-ink border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16">
 
-          {/* Left â€” contact info */}
+          {/* Left — contact info */}
           <div>
             <motion.p {...fadeUp} className="text-gold/60 text-xs tracking-[0.4em] uppercase font-body mb-6">Find Us</motion.p>
             <motion.h2 {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.1 }} className="font-heading font-bold text-white text-3xl mb-10 leading-tight">
@@ -63,11 +63,11 @@ export default function PressmachContact() {
                 {
                   icon: <MapPin size={18} className="text-gold flex-shrink-0 mt-0.5" />,
                   label: "Factory & Showroom",
-                  content: "No. 9/2, Kalhare Industrial Area,\nKachohalli, Off Magadi Road,\nBangalore â€“ 560091",
+                  content: "No. 9/2, Kalhare Industrial Area,\nKachohalli, Off Magadi Road,\nBangalore – 560091",
                 },
                 { icon: <Phone size={18} className="text-gold flex-shrink-0" />, label: "Phone", content: "+91 9008189732" },
                 { icon: <Mail size={18} className="text-gold flex-shrink-0" />, label: "Email", content: "kalhare@gmail.com" },
-                { icon: <Clock size={18} className="text-gold flex-shrink-0" />, label: "Working Hours", content: "Monday â€“ Saturday\n9:00 AM â€“ 6:00 PM IST" },
+                { icon: <Clock size={18} className="text-gold flex-shrink-0" />, label: "Working Hours", content: "Monday – Saturday\n9:00 AM – 6:00 PM IST" },
               ].map((item, i) => (
                 <motion.div
                   key={item.label}
@@ -121,7 +121,7 @@ export default function PressmachContact() {
             </motion.div>
           </div>
 
-          {/* Right â€” inquiry form */}
+          {/* Right — inquiry form */}
           <div>
             <motion.p {...fadeUp} className="text-gold/60 text-xs tracking-[0.4em] uppercase font-body mb-6">Quick Enquiry</motion.p>
             <motion.h2 {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.1 }} className="font-heading font-bold text-white text-3xl mb-8 leading-tight">
@@ -140,7 +140,7 @@ export default function PressmachContact() {
                 </div>
                 <h3 className="font-heading font-bold text-white text-2xl mb-3">Message Received</h3>
                 <p className="text-white/35 font-body font-light text-sm leading-relaxed">
-                  Thank you for reaching out. Our engineering team will respond within 1â€“2 business days.
+                  Thank you for reaching out. Our engineering team will respond within 1–2 business days.
                 </p>
               </motion.div>
             ) : (

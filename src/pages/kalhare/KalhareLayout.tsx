@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 
 const navLinks = [
-  { label: "Home", href: "/kalhare" },
+  { label: "Home", href: "/" },
   { label: "About", href: "/kalhare/about" },
   { label: "Products", href: "/kalhare/products" },
   { label: "Custom Transformers", href: "/kalhare/custom" },
@@ -54,7 +54,7 @@ function KalhareNav() {
             <NavLink
               key={link.href}
               to={link.href}
-              end={link.href === "/kalhare"}
+              end={link.href === "/"}
               className={({ isActive }) =>
                 `relative text-sm font-body font-medium tracking-wide transition-colors duration-300 pb-1
                 ${isActive ? "text-gold" : "text-white/70 hover:text-white"}`
@@ -97,7 +97,7 @@ function KalhareNav() {
           >
             <nav className="flex flex-col px-6 py-6 gap-5">
               {navLinks.map((link) => (
-                <NavLink key={link.href} to={link.href} end={link.href === "/kalhare"}
+                <NavLink key={link.href} to={link.href} end={link.href === "/"}
                   className={({ isActive }) => `text-base font-body tracking-wide ${isActive ? "text-gold" : "text-white/70"}`}
                 >
                   {link.label}

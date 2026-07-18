@@ -72,10 +72,10 @@ export default function KalhareProducts() {
             <p className="text-gold/70 text-xs tracking-[0.5em] uppercase font-body">Product Range</p>
           </motion.div>
           <div className="overflow-hidden mb-3">
-            <motion.h1 initial={{ y: "100%", filter: "blur(6px)" }} animate={{ y: 0, filter: "blur(0px)" }} transition={{ delay: 0.5, duration: 1, ease: EASE }} className="font-heading font-bold text-white leading-[0.9]" style={{ fontSize: "clamp(2.5rem, 6vw, 6rem)" }}>Transformer</motion.h1>
+            <motion.h1 initial={{ y: "100%", filter: "blur(6px)" }} animate={{ y: 0, filter: "blur(0px)" }} transition={{ delay: 0.5, duration: 1, ease: EASE }} className="font-heading font-bold text-white leading-[0.9]" style={{ fontSize: "clamp(2.25rem, 6vw, 6rem)" }}>Transformer</motion.h1>
           </div>
           <div className="overflow-hidden">
-            <motion.h1 initial={{ y: "100%", filter: "blur(6px)" }} animate={{ y: 0, filter: "blur(0px)" }} transition={{ delay: 0.65, duration: 1, ease: EASE }} className="font-heading font-bold italic text-gold leading-[0.9]" style={{ fontSize: "clamp(2.5rem, 6vw, 6rem)" }}>Solutions.</motion.h1>
+            <motion.h1 initial={{ y: "100%", filter: "blur(6px)" }} animate={{ y: 0, filter: "blur(0px)" }} transition={{ delay: 0.65, duration: 1, ease: EASE }} className="font-heading font-bold italic text-gold leading-[0.9]" style={{ fontSize: "clamp(2.25rem, 6vw, 6rem)" }}>Solutions.</motion.h1>
           </div>
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }} className="text-white/35 font-body font-light text-base max-w-xl mt-6">
             14 product types across 4 engineering categories. Every unit manufactured in-house at our Bangalore facility.
@@ -131,7 +131,7 @@ export default function KalhareProducts() {
         <div className="max-w-4xl mx-auto px-6 text-center">
           <motion.p {...fadeUp} className="text-ink/40 text-xs tracking-[0.4em] uppercase font-body mb-6">Don't see your specification?</motion.p>
           <motion.h2 {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.1 }} className="font-heading font-bold text-ink leading-tight mb-8" style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)" }}>
-            We manufacture fully custom transformers from your exact requirements.
+            We manufacture fully custom transformer and chokes for your exact requirements.
           </motion.h2>
           <motion.div {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.2 }}>
             <Link to="/kalhare/custom" className="inline-flex items-center gap-3 bg-ink text-white text-sm font-body font-semibold tracking-widest uppercase px-8 py-4 hover:bg-navy-950 transition-colors duration-300">

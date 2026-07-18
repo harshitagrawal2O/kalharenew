@@ -101,13 +101,18 @@ export default function KalhareCustom() {
             <div className="h-px w-12 bg-gold" />
           </motion.div>
           <div className="overflow-hidden mb-3">
-            <motion.h1 initial={{ y: "100%", filter: "blur(6px)" }} animate={{ y: 0, filter: "blur(0px)" }} transition={{ delay: 0.4, duration: 1, ease: EASE }} className="font-heading font-bold text-white leading-[0.9]" style={{ fontSize: "clamp(2.5rem, 5vw, 5rem)" }}>
+            <motion.h1 initial={{ y: "100%", filter: "blur(6px)" }} animate={{ y: 0, filter: "blur(0px)" }} transition={{ delay: 0.4, duration: 1, ease: EASE }} className="font-heading font-bold text-white leading-[0.9]" style={{ fontSize: "clamp(2.25rem, 5vw, 5rem)" }}>
               Build Your
             </motion.h1>
           </div>
+          <div className="overflow-hidden mb-3">
+            <motion.h1 initial={{ y: "100%", filter: "blur(6px)" }} animate={{ y: 0, filter: "blur(0px)" }} transition={{ delay: 0.55, duration: 1, ease: EASE }} className="font-heading font-bold italic text-gold leading-[0.9]" style={{ fontSize: "clamp(2.25rem, 5vw, 5rem)" }}>
+              Custom
+            </motion.h1>
+          </div>
           <div className="overflow-hidden">
-            <motion.h1 initial={{ y: "100%", filter: "blur(6px)" }} animate={{ y: 0, filter: "blur(0px)" }} transition={{ delay: 0.55, duration: 1, ease: EASE }} className="font-heading font-bold italic text-gold leading-[0.9]" style={{ fontSize: "clamp(2.5rem, 5vw, 5rem)" }}>
-              Custom Transformer.
+            <motion.h1 initial={{ y: "100%", filter: "blur(6px)" }} animate={{ y: 0, filter: "blur(0px)" }} transition={{ delay: 0.68, duration: 1, ease: EASE }} className="font-heading font-bold italic text-gold leading-[0.9]" style={{ fontSize: "clamp(2.25rem, 5vw, 5rem)" }}>
+              Transformer.
             </motion.h1>
           </div>
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }} className="text-white/35 font-body font-light text-base mt-6 leading-relaxed">

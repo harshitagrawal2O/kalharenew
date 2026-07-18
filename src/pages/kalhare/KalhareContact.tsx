@@ -35,10 +35,13 @@ export default function KalhareContact() {
             <p className="text-gold/70 text-xs tracking-[0.5em] uppercase font-body">Get In Touch</p>
           </motion.div>
           <div className="overflow-hidden mb-3">
-            <motion.h1 initial={{ y: "100%", filter: "blur(6px)" }} animate={{ y: 0, filter: "blur(0px)" }} transition={{ delay: 0.4, duration: 1, ease: EASE }} className="font-heading font-bold text-white leading-[0.9]" style={{ fontSize: "clamp(2.5rem, 6vw, 6rem)" }}>Contact</motion.h1>
+            <motion.h1 initial={{ y: "100%", filter: "blur(6px)" }} animate={{ y: 0, filter: "blur(0px)" }} transition={{ delay: 0.4, duration: 1, ease: EASE }} className="font-heading font-bold text-white leading-[0.9]" style={{ fontSize: "clamp(2.25rem, 6vw, 6rem)" }}>Contact</motion.h1>
+          </div>
+          <div className="overflow-hidden mb-3">
+            <motion.h1 initial={{ y: "100%", filter: "blur(6px)" }} animate={{ y: 0, filter: "blur(0px)" }} transition={{ delay: 0.55, duration: 1, ease: EASE }} className="font-heading font-bold italic text-gold leading-[0.9]" style={{ fontSize: "clamp(2.25rem, 6vw, 6rem)" }}>Kalhare</motion.h1>
           </div>
           <div className="overflow-hidden">
-            <motion.h1 initial={{ y: "100%", filter: "blur(6px)" }} animate={{ y: 0, filter: "blur(0px)" }} transition={{ delay: 0.55, duration: 1, ease: EASE }} className="font-heading font-bold italic text-gold leading-[0.9]" style={{ fontSize: "clamp(2.5rem, 6vw, 6rem)" }}>Kalhare Enterprises.</motion.h1>
+            <motion.h1 initial={{ y: "100%", filter: "blur(6px)" }} animate={{ y: 0, filter: "blur(0px)" }} transition={{ delay: 0.68, duration: 1, ease: EASE }} className="font-heading font-bold italic text-gold leading-[0.9]" style={{ fontSize: "clamp(2.25rem, 6vw, 6rem)" }}>Enterprises.</motion.h1>
           </div>
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.85 }} className="text-white/35 font-body font-light text-base mt-6 max-w-lg leading-relaxed">
             Enquire about products, request a quote, or speak with our engineering team. We respond within 24 hours on business days.
@@ -59,7 +62,8 @@ export default function KalhareContact() {
                   { Icon: MapPin, label: "Address", lines: ["No. 9/2, Kachohalli,", "Off Magadi Road,", "Bangalore – 560091, Karnataka"] },
                   { Icon: Phone, label: "Phone", lines: ["+91 9008189732"] },
                   { Icon: Mail, label: "Email", lines: ["kalhare@gmail.com"] },
-                  { Icon: Clock, label: "Business Hours", lines: ["Mon–Sat: 9:00 AM – 6:30 PM", "Closed on Sundays & Public Holidays"] },
+                  { Icon: Clock, label: "Business Timings", lines: ["Open 24x7 for Enquiries"] },
+                  { Icon: Clock, label: "Working Hours", lines: ["Mon–Sat: 9:00 AM – 6:30 PM", "Closed on Sundays & Public Holidays"] },
                 ].map(({ Icon, label, lines }) => (
                   <motion.div key={label} {...fadeUp} className="flex gap-5 py-5 border-b border-gold/8">
                     <div className="w-9 h-9 border border-gold/20 flex items-center justify-center shrink-0">
@@ -130,14 +134,30 @@ export default function KalhareContact() {
       </section>
 
       {/* MAP */}
-      <section className="h-96 bg-navy-950 border-t border-gold/8 overflow-hidden">
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 1.2 }} className="w-full h-full">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.5534577040374!2d77.5004609!3d12.9415551!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae3d75c0bf3265%3A0x53d79a4d1c2a4f34!2sKachohalli%20Industrial%20Area%2C%20Bengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1700000000000"
-            width="100%" height="100%" style={{ border: 0, filter: "grayscale(1) invert(0.85) contrast(0.75) hue-rotate(195deg)" }}
-            allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Kalhare Enterprises location"
-          />
-        </motion.div>
+      <section className="bg-navy-950 border-t border-gold/8">
+        <div className="max-w-7xl mx-auto px-6 py-16">
+          <motion.div {...fadeUp} className="flex flex-col items-center text-center mb-10">
+            <p className="text-gold/60 text-xs tracking-[0.4em] uppercase font-body mb-5">Find Us</p>
+            <div className="bg-white p-3 border border-gold/30">
+              <img
+                src="/images/kalhare/map-qr.png"
+                alt="Scan QR code to navigate to Kalhare Enterprises"
+                className="w-28 h-28 sm:w-36 sm:h-36 object-contain"
+              />
+            </div>
+            <p className="text-white/40 font-body font-light text-sm mt-4 max-w-xs">
+              Scan to open directions to our Kachohalli facility on your phone
+            </p>
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 1.2 }} className="h-80 sm:h-96 w-full overflow-hidden border border-gold/10">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.5534577040374!2d77.5004609!3d12.9415551!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae3d75c0bf3265%3A0x53d79a4d1c2a4f34!2sKachohalli%20Industrial%20Area%2C%20Bengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1700000000000"
+              width="100%" height="100%" style={{ border: 0, filter: "grayscale(1) invert(0.85) contrast(0.75) hue-rotate(195deg)" }}
+              allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Kalhare Enterprises location"
+            />
+          </motion.div>
+        </div>
       </section>
 
     </motion.div>
